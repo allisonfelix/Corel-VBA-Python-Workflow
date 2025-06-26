@@ -23,15 +23,16 @@ GMS_REFUGO_POR_FONTE = "RefugarPorFonteFaltando"
 POLL_TIMEOUT = 60  # segundos
 AUTO_CLOSE_MULTIPLE = True  # fecha todos os docs abertos se mais de um estiver aberto
 IGNORED_SYSTEM_FONTS = {"arial", "calibri"}
-ONLY_DIGITAL_CDR = True  # se True, só processa arquivos .cdr com 'impressao-digital' no nome
+ONLY_DIGITAL_CDR = True  # se True, só processa arquivos .cdr com as palavras da lista de palavras-chave no nome
 
 # --- Lista de palavras-chave para CDRs ---
-CDR_KEYWORDS = ["impressao-digital", "banner", "lona", "vinil-adesivo", "papel-adesivo", "adesivo"]  # adicione o que precisar
+CDR_KEYWORDS = ["impressao-digital", "banner", "lona", "vinil-adesivo", "papel-adesivo", "adesivo"]
 
 # Inicializa COM e CorelDRAW tipado
 pythoncom.CoInitialize()
 app = gencache.EnsureDispatch("CorelDRAW.Application")
 app.Visible = True
+
 # Suprime diálogos de alerta (incluindo fontes faltando)
 try:
     app.Preferences.Application.EnableAlerts = False
@@ -62,7 +63,7 @@ def run_macro(project: str, module: str, procedure: str, timeout: int = POLL_TIM
         busy = None
         try:
             busy = getattr(app, "Busy", None)
-            # ou, se sua versão oferece: busy = app.GMSManager.IsBusy
+            # ou, se a versão oferece: busy = app.GMSManager.IsBusy
         except Exception:
             busy = None
 
@@ -124,7 +125,7 @@ def processar_arquivo(caminho_arquivo: str):
                 print(f"Ignorando CDR sem keywords: {basename}")
                 return
 
-        # Abre o documento UMA ÚNICA VEZ
+        # Abre o documento
         doc = app.OpenDocument(caminho_arquivo)
         try:
             # Checa fontes faltantes
@@ -165,7 +166,8 @@ def processar_arquivo(caminho_arquivo: str):
     # Parâmetros para TIF Impressao-Digital
     if ext == ".tif" and "impressao-digital" in basename.lower():
         name_without_ext = os.path.splitext(basename)[0]
-        # Remove sufixo numérico (ex: -01, 01) no final do nome
+        # Remove sufixo numérico (ex: -001, 001) no final do nome
+        # Essa é uma lógica baseada no projeto do outro repositório de exportar PDF para TIFF
         m = re.match(r"^(.*?)(?:-)?\d+$", name_without_ext, re.IGNORECASE)
         if m:
             base_name_without_numbers = m.group(1)
