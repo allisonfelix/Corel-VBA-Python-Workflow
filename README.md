@@ -73,4 +73,4 @@ Abra o arquivo `tratar-python.py` e ajuste:
 
 ## Licença
 
-MIT License.
+Mozilla Public License Version 2.0
