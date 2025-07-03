@@ -3,7 +3,7 @@
 
 Este repositório demonstra como automatizar, em lote, a execução de macros VBA (GMS) no CorelDRAW a partir de um script Python, usando COM (pywin32). O código percorre pastas raiz, identifica arquivos de arte (JPG, PNG, TIF e CDR), executa verificações (fontes faltantes, associação a PDFs) e dispara macros em sequência, sem interação manual.
 
-> **Atenção**: o arquivo **Graficonauta.gms** não está disponível aqui, pois contém rotinas desenvolvidas para uso interno de uma empresa. Este projeto, contudo, exemplifica as estratégias de integração Python ↔ CorelDRAW/VBA e pode ser adaptado para qualquer conjunto de macros.
+> **Atenção**: o arquivo **AutomacaoGrafica.gms** não está disponível aqui, pois contém rotinas desenvolvidas para uso interno de uma empresa. Este projeto, contudo, exemplifica as estratégias de integração Python ↔ CorelDRAW/VBA e pode ser adaptado para qualquer conjunto de macros.
 
 ## Índice
 
@@ -44,7 +44,7 @@ Abra o arquivo `tratar-python.py` e ajuste:
 
 ## Uso
 
-1. Posicione seu GMS (por ex. `Graficonauta.gms`) em `%ProgramFiles%\Corel\CorelDRAW Graphics Suite <versão>\Draw\GMS`, onde `<versão>` é o ano da sua instalação (por ex. `2022` ou `2024`).  
+1. Posicione seu GMS (por ex. `AutomacaoGrafica.gms`) em `%ProgramFiles%\Corel\CorelDRAW Graphics Suite <versão>\Draw\GMS`, onde `<versão>` é o ano da sua instalação (por ex. `2022` ou `2024`).  
 2. Ajuste configurações em `tratar-python.py`.  
 3. Execute:
 
